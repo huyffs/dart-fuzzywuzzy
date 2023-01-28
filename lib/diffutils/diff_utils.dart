@@ -4,17 +4,17 @@ import 'structs/matching_block.dart';
 // import 'structs/op_code.dart';
 
 class DiffUtils {
-  static List<EditOp> getEditOps(String s1, String s2) {
-    var len1 = s1.length;
-    var len2 = s2.length;
-
+  static List<EditOp> getEditOps(Runes s1, Runes s2) {
     int len1o, len2o;
     int i;
 
     List<int> matrix;
 
-    var c1 = s1.runes.toList();
-    var c2 = s2.runes.toList();
+    var c1 = s1.toList();
+    var c2 = s2.toList();
+
+    var len1 = c1.length;
+    var len2 = c2.length;
 
     var p1 = 0;
     var p2 = 0;
@@ -191,7 +191,9 @@ class DiffUtils {
   }
 
   static List<MatchingBlock> getMatchingBlocks(String s1, String s2) {
-    return _getMatchingBlocks(s1.length, s2.length, getEditOps(s1, s2));
+    final r1 = s1.runes;
+    final r2 = s2.runes;
+    return _getMatchingBlocks(r1.length, r2.length, getEditOps(r1, r2));
   }
 
   // static List<MatchingBlock> _getMatchingBlocksFromOpcodes(
@@ -586,10 +588,10 @@ class DiffUtils {
     int half;
     var c1 = s1.runes.toList();
     var c2 = s2.runes.toList();
+    var len1 = c1.length;
+    var len2 = c2.length;
     var str1 = 0;
     var str2 = 0;
-    var len1 = s1.length;
-    var len2 = s2.length;
     while (((len1 > 0) && (len2 > 0)) && (c1[str1] == c2[str2])) {
       len1--;
       len2--;
